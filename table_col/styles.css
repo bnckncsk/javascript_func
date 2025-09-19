@@ -1,4 +1,25 @@
 table, thead, tr, td, th{
     border: 1px solid #42dd9b;
     border-collapse: collapse;
+    color: rgb(252, 248, 0);
+    font-style: oblique;
+}
+
+table thead th{
+    background-color: #006416;
+}
+
+table thead ~ tbody > tr{
+    background-color: yellowgreen;
+}
+table tbody > tr{
+    background-color: rgb(170, 91, 170);
+}
+
+tbody tr:nth-child(2n) {
+    background-color: goldenrod;
+}
+
+tbody tr:hover{
+    background-color: rgb(199, 157, 195);
 }
