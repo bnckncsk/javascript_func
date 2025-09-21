@@ -1,0 +1,17 @@
+table, tr, td, th{
+    border: 2px green dotted;
+    border-collapse: collapse;
+}
+
+table tbody tr{
+    background-color: yellow;
+}
+
+table tbody tr:nth-child(2n + 1) {
+    background-color: lightblue;
+}
+
+table tbody tr:hover{
+    color: red;
+    font-weight: bold;
+}
