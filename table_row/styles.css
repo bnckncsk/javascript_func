@@ -6,3 +6,51 @@ table, tr, td, th{
 tbody tr td:last-child ,tbody tr td:nth-last-child(3){
     background-color: yellow;
 }
+
+#gyakorlas{
+    background-color: green;
+    color: yellow;
+}
+
+
+/* gomb ami utan bekezdes van */
+#gyakorlas button:has(+p) {
+    background-color: red;
+}
+
+/* a gomb utani bekezdest formazza */
+#gyakorlas button + p {
+    color: blue;
+}
+
+/* gombok amiket nem kovet p */
+#gyakorlas button:not(:has(+p)) {
+    background-color: chartreuse;
+}
+
+/* link hoverrel szinezze at a gomb betuszint */
+#gyakorlas:has(+ a:hover) button{
+    color: rgb(172, 127, 255);
+}
+
+/* ahol nics rowspan azokat hoverkor jelolje aquara */
+tr:not(:has(td[rowspan])) + tr:not(:has(td[rowspan])):hover td {
+    background-color: aqua;
+}
+
+/* dupla sorokat jelolje ki ugynazzal a szinnel */
+tr:has(td[rowspan]):hover td{
+    background-color: coral;
+}
+
+tr:has(td[rowspan]):hover + tr td{
+    background-color: coral;
+}
+
+tr:has(td[rowspan]):has(+ tr:hover) td{
+    background-color: coral;
+}
+
+tr:has(:not(rowspan)):has(+ tr:hover) + tr td {
+    background-color: coral;
+}
