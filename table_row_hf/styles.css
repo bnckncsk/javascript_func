@@ -1,0 +1,17 @@
+table, tr, td, th{
+    border: 4px green double;
+    border-collapse: collapse;
+}
+
+tbody tr td:last-child ,tbody tr td:nth-last-child(3){
+    background-color: limegreen;
+}
+
+tr:has(td[rowspan]):hover td, 
+tr:has(td[rowspan]):hover + tr td, 
+tr:has(td[rowspan]):has(+ tr:hover) td, 
+tr:has(td:not([rowspan])):has(+ tr:hover) + tr td{
+    background-color: rgb(238, 193, 14);
+    color: rgb(100, 151, 248);
+    font-weight: bold;
+}
