@@ -84,3 +84,17 @@ for(const i of arr){
         td4.innerText = i.love2
     }
 }
+
+
+/**
+ * createCellElement() - létrehoz táblázatcella elemet és hozzáfűzi a sorhoz
+ * @param {string} cellType - th vagy td-t hozunk-e létre
+ * @param {string} cellContent - cella tartalma
+ * @param {HTMLTableRowElement} cellRow - melyik sorhoz csatoljuk hozzá
+ */
+
+function createCellElement(cellType, cellContent, cellRow) {
+    const a = document.createElement(cellType);
+    a.innerText = cellContent;
+    cellRow.appendChild(a);
+}
