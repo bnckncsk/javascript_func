@@ -39,20 +39,10 @@ table.appendChild(thead);
 const tr = document.createElement('tr');
 thead.appendChild(tr);
 
-
-const th1 = document.createElement('th');
-tr.appendChild(th1);
-
-const th2 = document.createElement('th');
-tr.appendChild(th2);
-
-const th3 = document.createElement('th');
-tr.appendChild(th3);
-
-th1.innerText = "Szerző neve";
-th2.innerText = "Korszak"
-th3.innerText = "Szerelmek"
-th3.colSpan = 2
+createCellElement('th', "Szerző neve", tr);
+createCellElement('th', "Korszak", tr);
+const th3 = createCellElement('th', "Szerelmek", tr);
+th3.colSpan = 2;
 
 
 const tbody = document.createElement('tbody')
@@ -61,27 +51,15 @@ table.appendChild(tbody)
 for(const i of arr){
     const tr = document.createElement('tr')
     tbody.appendChild(tr)
-
-    const td1 = document.createElement('td')
-    tr.appendChild(td1)
-
-    const td2 = document.createElement('td')
-    tr.appendChild(td2)
-
-    const td3 = document.createElement('td')
-    tr.appendChild(td3)
-
-    td1.innerText = i.author
-    td2.innerText = i.era
-    td3.innerText = i.love1
-
+    
+    createCellElement('td', i.author, tr);
+    createCellElement('td', i.era, tr);
+    const td3 = createCellElement('td', i.love1, tr);
 
     if (i.love2 == undefined){
         td3.colSpan = 2
     } else{
-        const td4 = document.createElement('td')
-        tr.appendChild(td4)
-        td4.innerText = i.love2
+        createCellElement('td', i.love2 , tr);
     }
 }
 
@@ -91,10 +69,12 @@ for(const i of arr){
  * @param {string} cellType - th vagy td-t hozunk-e létre
  * @param {string} cellContent - cella tartalma
  * @param {HTMLTableRowElement} cellRow - melyik sorhoz csatoljuk hozzá
+ * @returns {HTMLTableCellElement} - ezzel a lokális változóval tér vissza
  */
 
 function createCellElement(cellType, cellContent, cellRow) {
     const a = document.createElement(cellType);
     a.innerText = cellContent;
     cellRow.appendChild(a);
+    return a;
 }
