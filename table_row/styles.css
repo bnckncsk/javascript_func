@@ -51,6 +51,6 @@ tr:has(td[rowspan]):has(+ tr:hover) td{
     background-color: coral;
 }
 
-tr:has(:not(rowspan)):has(+ tr:hover) + tr td {
+tr:has(:not(td[rowspan])):has(+ tr:hover) + tr td {
     background-color: coral;
 }
