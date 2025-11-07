@@ -1,5 +1,5 @@
 /**
- * @type {{nationality:string, author1:string, mu1:string, author2?:string, mu2?:string}[]}
+ * @type {{nationality:string, author:string, mu1:string, author2?:string, mu2?:string}[]}
  */
 
 const arr = [
@@ -54,6 +54,14 @@ for (let x of arr) {
     const td1 = document.createElement('td');
     tr2.appendChild(td1);
     td1.innerText = x.nationality;
+    
+    td1.addEventListener('click', function(e){
+        /**
+         * @type {HTMLTableCellElement}
+         */
+        const a = e.target;
+        a.classList.add("marked");
+    });
 
     const td2 = document.createElement('td');
     tr2.appendChild(td2);
