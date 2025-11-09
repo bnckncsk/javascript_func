@@ -46,10 +46,19 @@ for(let x of t) {
 
 const tbody = document.createElement('tbody');
 table.appendChild(tbody);
+tbody.id = 'tablebody';
 
-for (let x of arr) {
+/**
+ * renderTalbeBody() - táblázat törzsének kiszervezése
+ * @param {{nationality:string, author:string, mu1:string, author2?:string, mu2?:string}[]} tomb 
+ */
+function renderTableBody(tomb) {
+    const tbodyLocal = document.getElementById('tablebody'); // eredeti tbody-nkat behozzuk lokális változóként a függvényünkbe
+    tbodyLocal.innerHTML = ""; // eddigi tbody lenullázása
+
+    for (let x of tomb) { // eddigi táblázatkreáló for ciklus
     const tr2 = document.createElement('tr');
-    tbody.appendChild(tr2);
+    tbodyLocal.appendChild(tr2);
 
     const td1 = document.createElement('td');
     tr2.appendChild(td1);
@@ -60,6 +69,16 @@ for (let x of arr) {
          * @type {HTMLTableCellElement}
          */
         const a = e.target;
+
+        const row = a.parentElement; // kattintott cella sora
+        const tbody = row.parentElement; // ennek a sornak a szülője (azaz a tbody)
+
+        const alreadyMarked = tbody.querySelector('.marked'); // ellenőriz kijelölt elemeket
+
+        if (alreadyMarked !== null) { // ha létezik már kijelölt elem, eltávolítja róla a marked classt
+            alreadyMarked.classList.remove('marked'); 
+        }
+
         a.classList.add("marked"); // hozzáadja az a változót a marked osztályhoz
     });
 
@@ -73,7 +92,7 @@ for (let x of arr) {
 
     if (x.mu2 != undefined && x.author2 != undefined) {
         const tr3 = document.createElement('tr');
-        tbody.appendChild(tr3);
+        tbodyLocal.appendChild(tr3);
 
         const td4 = document.createElement('td');
         tr3.appendChild(td4);
@@ -86,6 +105,8 @@ for (let x of arr) {
         td1.rowSpan = 2;
     }
 }
+}
+renderTableBody(arr);
 
 const form = document.getElementById('htmlform'); // formot eltároljuk egy változóba
 form.addEventListener('submit', function(e){
@@ -200,6 +221,10 @@ form.addEventListener('submit', function(e){
  * @param {string} labelContent 
  */
 function createFormElement(form, id, labelContent) {
+    const br1 = document.createElement('br'); // szükséges sortörések a kinézethez (ezt máshogy nemtudom, hogy lehet-e)
+    const br2 = document.createElement('br');
+    const br3 = document.createElement('br');
+
     const label = document.createElement('label');
     label.htmlFor = id;
     label.innerText = labelContent;
@@ -208,9 +233,90 @@ function createFormElement(form, id, labelContent) {
     input.id = id;
 
     form.appendChild(label);
+    form.appendChild(br1);
     form.appendChild(input);
+    form.appendChild(br2);
+    form.appendChild(br3);
 }
 
 const jsForm = document.createElement('form');
-document.body.appendChild(jsForm)    
-createFormElement("jsForm", "nationality", "Orosz");
+document.body.appendChild(jsForm)
+
+createFormElement(jsForm, "nationality", "Nemzetiség:"); // feltöltjük a formunkat
+createFormElement(jsForm, "author", "Szerző:");
+createFormElement(jsForm, "mu1", "Mű:");
+createFormElement(jsForm, "author2", "Másik szerző:");
+createFormElement(jsForm, "mu2", "Mű:");
+
+jsForm.addEventListener('submit', function(e){
+    e.preventDefault(); // alapértelmezett form viselkedést meggátoljuk
+
+    /**
+     * @type {HTMLFormElement}
+     */
+    const form = e.target;
+
+    /**
+     * @type {HTMLInputElement}
+     */
+    const nationality = form.querySelector('#nationality'); // lekérjük az adatokat a html-ünkből
+    /**
+     * @type {HTMLInputElement}
+     */
+    const author = form.querySelector('#author');
+    /**
+     * @type {HTMLInputElement}
+     */
+    const mu1 = form.querySelector('#mu1'); 
+    /**
+     * @type {HTMLInputElement}
+     */
+    const author2 = form.querySelector('#author2');
+    /**
+     * @type {HTMLInputElement}
+     */
+    const mu2 = form.querySelector('#mu2');
+
+
+    /**
+     * @type {string}
+     */
+    const natValue = nationality.value; // változóadás az értékeknek
+    /**
+     * @type {string}
+     */
+    const authValue = author.value;
+    /**
+     * @type {string}
+     */
+    const mu1Value = mu1.value;
+    /**
+     * @type {string}
+     */
+    const auth2Value = author2.value;
+    /**
+     * @type {string}
+     */
+    const mu2Value = mu2.value;
+
+
+    /**
+     * @type {{nationality:string, author:string, mu1:string, author2?:string, mu2?:string}}
+     */
+    const obj = { // object létrehozása
+        
+    }
+    obj.nationality = natValue; // az object tulajdonságait megfeleltetjük az input értékekkel
+    obj.author = authValue;
+    obj.mu1 = mu1Value;
+    obj.author2 = auth2Value;
+    obj.mu2 = mu2Value;
+
+    arr.push(obj); // ezt az objektumot hozzáadjuk az arrayhez
+
+    renderTableBody(arr); // és meghívjuk rá  a renderTableBody-t a tömbbel
+})
+
+const submitGomb = document.createElement('button'); // submoit gombunk létrehozása
+submitGomb.innerText = 'Hozzáadás';
+jsForm.appendChild(submitGomb);
