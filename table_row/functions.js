@@ -18,7 +18,7 @@ function renderTableBody(tomb) {
 
 
 /**
- * createFormElement()
+ * createFormElement() - formfeltöltő function
  * @param {string} form 
  * @param {string} id 
  * @param {string} labelContent 
@@ -28,6 +28,9 @@ function createFormElement(form, id, labelContent) {
     const br2 = document.createElement('br');
     const br3 = document.createElement('br');
 
+    const div = document.createElement('div');
+    form.appendChild(div);
+
     const label = document.createElement('label');
     label.htmlFor = id;
     label.innerText = labelContent;
@@ -35,16 +38,20 @@ function createFormElement(form, id, labelContent) {
     const input = document.createElement('input');
     input.id = id;
 
-    form.appendChild(label);
+    const span = document.createElement('span');
+    span.classList.add("error");
+
+    div.appendChild(label);
     form.appendChild(br1);
-    form.appendChild(input);
+    div.appendChild(input);
+    div.appendChild(span);
     form.appendChild(br2);
     form.appendChild(br3);
 }
 
 
 /**
- * renderTableRow() 
+ * renderTableRow() - táblázatsorok kiszervezése
  * @param {HTMLTableSectionElement} tableBody 
  * @param {CountryWriters} CountryWriters 
  */
@@ -205,4 +212,27 @@ function HTMLFormEventListener(e){
     const tbody = document.getElementById('tabletest'); // általános tbody, tr, td létrehozás
 
     renderTableRow(tbody, valami);
+}
+
+
+/**
+ * validateFields() - validáció
+ * @param {HTMLInputElement} inputfield1 
+ * @param {HTMLInputElement} inputfield2 
+ * @param {HTMLInputElement} inputfield3 
+ * @returns {boolean}
+ */
+function validateFields(inputfield1, inputfield2, inputfield3) {
+    let valid = true;
+
+    if (inputfield1.value == ""){
+        const parentDiv = inputfield1.parentElement;
+        const r = parentDiv.querySelector(".error");
+        r.innerText = "Mező kitöltése kötelező!"
+
+        valid = false;
+    }
+
+
+    return valid;
 }

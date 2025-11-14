@@ -119,6 +119,9 @@ jsForm.addEventListener('submit', function(e){
     const obj = { // object létrehozása
         
     }
+    if (validateFields(nationality, szerzo1, mu1)){
+        // bef
+    }
     obj.nationality = natValue; // az object tulajdonságait megfeleltetjük az input értékekkel
     obj.author = authValue;
     obj.mu1 = mu1Value;
