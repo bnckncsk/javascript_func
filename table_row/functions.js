@@ -1,7 +1,9 @@
 /**
  * @typedef {{nationality:string, author:string, mu1:string, author2?:string, mu2?:string}} CountryWriters
  */
-
+/**
+ * @typedef {{id:string, label:string}} FormField
+ */
 
 /**
  * renderTableBody() - táblázat törzsének kiszervezése
@@ -42,11 +44,11 @@ function createFormElement(form, id, labelContent) {
     span.classList.add("error");
 
     div.appendChild(label);
-    form.appendChild(br1);
+    div.appendChild(br1);
     div.appendChild(input);
     div.appendChild(span);
-    form.appendChild(br2);
-    form.appendChild(br3);
+    div.appendChild(br2);
+    div.appendChild(br3);
 }
 
 
@@ -200,6 +202,10 @@ function HTMLFormEventListener(e){
     const valami = {
         
     }
+    if (!validateFields(nationality, author, mu1)){ // ha az első három mezőnkből bármelyik üres, megszakítja a folyamatot és hibaüzenetet ír
+        return; // ugyanezt megtesszük, mint a JS formuknban
+    }
+
     valami.nationality = natValue; // az object értékeit megfeleltetjük a valueknak
     valami.author = authValue;
     valami.mu1 = mu1Value;
@@ -223,6 +229,14 @@ function HTMLFormEventListener(e){
  * @returns {boolean}
  */
 function validateFields(inputfield1, inputfield2, inputfield3) {
+    const form = inputfield1.form; // kiraktuk változóba a js formunkat, hogy használhassuk
+
+    const errors = form.querySelectorAll(".error"); // lekérjük az összes error osztállyal rendelkező elemet
+    
+    for (const hiba of errors) {
+        hiba.innerText = ""; // majd végigiterálunk ezen elemeket és midnegyiknek töröljük az innerTextjét
+    }
+
     let valid = true;
 
     if (inputfield1.value == ""){
@@ -233,6 +247,50 @@ function validateFields(inputfield1, inputfield2, inputfield3) {
         valid = false;
     }
 
+    if (validateField(inputfield2, "Mező kitöltése kötelező!") == false) {
+        valid = false
+    }
+
+    if (validateField(inputfield3, "Mező kitöltése kötelező!") == false) {
+        valid = false
+    }
+
+    return valid;
+}
+
+
+/**
+ * generateTable() - táblázatot generáló függvény
+ * @param {string[]} headerList 
+ * @param {string} tbodyId 
+ */
+function generateTable(headerList, tbodyId) {
+    const table = document.createElement('table');
+    document.body.appendChild(table);
+
+    generateHeader(table, headerList);
+
+    const tbody = document.createElement('tbody');
+    tbody.id = tbodyId;
+    table.appendChild(tbody);
+}
+
+
+/**
+ * validateField() - egy mező vizsgálata és error esetén kezelése
+ * @param {HTMLInputElement} htmlInputField 
+ * @param {string} errorMessage 
+ * @returns {boolean}
+ */
+function validateField(htmlInputField, errorMessage) {
+    valid = true;
+
+    if (htmlInputField.value == ""){
+        const div = htmlInputField.parentElement;
+        const message = div.querySelector('.error');
+        message.innerText = errorMessage;
+        valid = false;
+    }
 
     return valid;
 }
