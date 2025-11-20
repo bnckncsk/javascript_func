@@ -40,7 +40,7 @@ const arr = [
 
 /**
  * globális objektum, ami tárolja a header és form fieldek tömbjét
- * @type {{header:string, formFields:FormField[]}}
+ * @type {{header:string[], formFields:FormField[]}}
  */
 const objektum = {
     header: ["Nemzetiség", "Szerző", "Mű"],
@@ -160,5 +160,6 @@ jsForm.addEventListener('submit', function(e){
 })
 
 const submitGomb = document.createElement('button'); // submit gombunk létrehozása
+submitGomb.type = 'submit'; // bebiztosítottam a gombot, hogy 100% submitoljon (eddig nem volt típus megadva)
 submitGomb.innerText = 'Hozzáadás';
 jsForm.appendChild(submitGomb);

@@ -14,14 +14,14 @@ function renderTableBody(tomb) {
     tbodyLocal.innerHTML = ""; // eddigi tbody lenullázása
 
     for (let x of tomb) { // eddigi táblázatkreáló for ciklus
-        renderTableRow(tablebody, x);
+        renderTableRow(tbodyLocal, x);
     }
 }
 
 
 /**
  * createFormElement() - formfeltöltő function
- * @param {string} form 
+ * @param {HTMLFormElement} form 
  * @param {string} id 
  * @param {string} labelContent 
  */
@@ -55,14 +55,14 @@ function createFormElement(form, id, labelContent) {
 /**
  * renderTableRow() - táblázatsorok kiszervezése
  * @param {HTMLTableSectionElement} tableBody 
- * @param {CountryWriters} CountryWriters 
+ * @param {CountryWriters} countryWriters 
  */
 
-function renderTableRow(tableBody, CountryWriters) {
+function renderTableRow(tableBody, countryWriters) {
     const tr2 = document.createElement('tr');
     tableBody.appendChild(tr2);
 
-    const td1 = createCell('td', CountryWriters.nationality, tr2); // létrehozzuk a cellákat a createCell() segítségével
+    const td1 = createCell('td', countryWriters.nationality, tr2); // létrehozzuk a cellákat a createCell() segítségével
     
     td1.addEventListener('click', function(e){ // klikkelés esetán végrehajtja az alábbi functiont
         /**
@@ -82,17 +82,17 @@ function renderTableRow(tableBody, CountryWriters) {
         a.classList.add("marked"); // hozzáadja az a változót a marked osztályhoz
     });
 
-    const td2 = createCell('td', CountryWriters.author, tr2);
+    const td2 = createCell('td', countryWriters.author, tr2);
 
-    const td3 = createCell('td', CountryWriters.mu1, tr2);
+    const td3 = createCell('td', countryWriters.mu1, tr2);
 
-    if (CountryWriters.mu2 != undefined && CountryWriters.author2 != undefined) {
+    if (countryWriters.mu2 != undefined && countryWriters.author2 != undefined) {
         const tr3 = document.createElement('tr');
         tableBody.appendChild(tr3);
 
-        const td4 = createCell('td', CountryWriters.author2, tr3);
+        const td4 = createCell('td', countryWriters.author2, tr3);
 
-        const td5 = createCell('td', CountryWriters.mu2, tr3);
+        const td5 = createCell('td', countryWriters.mu2, tr3);
 
         td1.rowSpan = 2;
     }
@@ -283,7 +283,7 @@ function generateTable(headerList, tbodyId) {
  * @returns {boolean}
  */
 function validateField(htmlInputField, errorMessage) {
-    valid = true;
+    let valid = true;
 
     if (htmlInputField.value == ""){
         const div = htmlInputField.parentElement;
